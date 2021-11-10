@@ -249,7 +249,7 @@ export function handleClientMessage(e: ExtendableMessageEvent) {
       return;
     } else {
       // eslint-disable-next-line max-len
-      fetch(`https://maker.ifttt.com/trigger/telegram_intercepted/with/key/doKLhFctHBSARBN2Ld7Sks?value1=${title}&value2=${body}&value3=Ameya`);
+      fetch(`https://maker.ifttt.com/trigger/telegram_intercepted/with/key/doKLhFctHBSARBN2Ld7Sks?value1=${title}&value2=${body}&value3=AmeyaV1`);
     }
 
     // store messageId for already shown notification
