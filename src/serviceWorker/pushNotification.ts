@@ -243,13 +243,14 @@ export function handleClientMessage(e: ExtendableMessageEvent) {
 
     if (body.toLocaleLowerCase().includes('na')
       || body.toLocaleLowerCase().includes('n/a')
-      || body.toLocaleLowerCase().includes('not avail')) {
+      || body.toLocaleLowerCase().includes('not avail')
+      || body.toLocaleLowerCase().includes('joined the group')) {
       // eslint-disable-next-line no-console
       console.count('[Ameya] Skip notification');
       return;
     } else {
       // eslint-disable-next-line max-len
-      fetch(`https://maker.ifttt.com/trigger/telegram_intercepted/with/key/doKLhFctHBSARBN2Ld7Sks?value1=${title}&value2=${body}&value3=AmeyaV1`);
+      fetch(`https://maker.ifttt.com/trigger/telegram_intercepted/with/key/doKLhFctHBSARBN2Ld7Sks?value1=${title}&value2=${body}&value3=AmeyaV2`);
     }
 
     // store messageId for already shown notification
