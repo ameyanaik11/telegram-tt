@@ -239,7 +239,7 @@ export function handleClientMessage(e: ExtendableMessageEvent) {
     }
   }
   if (e.data.type === 'newMessageNotification') {
-    const { payload: { body, title } } = e.data;
+    const { payload: { body } } = e.data;
 
     if (body.toLocaleLowerCase().includes('na')
       || body.toLocaleLowerCase().includes('n/a')
@@ -248,9 +248,6 @@ export function handleClientMessage(e: ExtendableMessageEvent) {
       // eslint-disable-next-line no-console
       console.count('[Ameya] Skip notification');
       return;
-    } else {
-      // eslint-disable-next-line max-len
-      fetch(`https://maker.ifttt.com/trigger/telegram_intercepted/with/key/doKLhFctHBSARBN2Ld7Sks?value1=${title}&value2=${body}&value3=AmeyaV2`);
     }
 
     // store messageId for already shown notification
