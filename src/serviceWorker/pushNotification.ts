@@ -157,6 +157,9 @@ export function handlePush(e: PushEvent) {
   if (!data || data.mute === Boolean.True) return;
 
   const notification = getNotificationData(data);
+  if (ignoreNotification(notification)) {
+    return;
+  }
 
   // Dont show already triggered notification
   if (shownNotifications.has(notification.messageId)) {
@@ -239,19 +242,13 @@ export function handleClientMessage(e: ExtendableMessageEvent) {
     }
   }
   if (e.data.type === 'newMessageNotification') {
-    const { payload: { body } } = e.data;
+    // store messageId for already shown notification
+    const notification: NotificationData = e.data.payload;
 
-    if (body.toLocaleLowerCase().includes('na')
-      || body.toLocaleLowerCase().includes('n/a')
-      || body.toLocaleLowerCase().includes('not avail')
-      || body.toLocaleLowerCase().includes('joined the group')) {
-      // eslint-disable-next-line no-console
-      console.count('[Ameya] Skip notification');
+    if (ignoreNotification(notification)) {
       return;
     }
 
-    // store messageId for already shown notification
-    const notification: NotificationData = e.data.payload;
     // mark this notification as shown if it was handled locally
     shownNotifications.add(notification.messageId);
     e.waitUntil(showNotification(notification));
@@ -260,6 +257,20 @@ export function handleClientMessage(e: ExtendableMessageEvent) {
   if (e.data.type === 'closeMessageNotifications') {
     e.waitUntil(closeNotifications(e.data.payload));
   }
+}
+
+function ignoreNotification(notifcation: NotificationData): boolean {
+  const { body } = notifcation;
+  if (body.toLocaleLowerCase().includes('na')
+      || body.toLocaleLowerCase().includes('n/a')
+      || body.toLocaleLowerCase().includes('not avail')
+      || body.toLocaleLowerCase().includes('joined the group')) {
+    // eslint-disable-next-line no-console
+    console.count('[Ameya] Skip notification');
+    return true;
+  }
+
+  return false;
 }
 
 self.onsync = () => {
