@@ -1,4 +1,5 @@
-**Telegram Web Z was updated to version alpha 1.21**
+**Telegram Web Z was updated to version alpha 1.22**
 
 🤩 **Better**
-· Ameya - Skip notifications for 'NA' or 'Not available' keywords
+· Ameya - Suppress notifications for 'NA' or 'Not available' keywords
+· Ameya - Allow 'NA' notifications once every 5 mins

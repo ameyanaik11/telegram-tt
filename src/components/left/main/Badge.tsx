@@ -32,6 +32,7 @@ const Badge: FC<OwnProps> = ({ chat, isPinned, isMuted }) => {
             <div className="Badge mention">
               <i className="icon-mention" />
             </div>
+            (Non NA = {chat.unreadMentionsCount})
             <div className={className}>
               {formatIntegerCompact(chat.unreadCount)}
             </div>

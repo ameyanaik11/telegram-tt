@@ -112,6 +112,7 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
 
     case 'newMessage': {
       const { message } = update;
+      // debugger;
       const { chatId: currentChatId, threadId, type: messageListType } = selectCurrentMessageList(global) || {};
 
       if (message.senderId === global.currentUserId && !message.isFromScheduled) {
@@ -136,7 +137,7 @@ addReducer('apiUpdate', (global, actions, update: ApiUpdate) => {
       } else {
         setGlobal(updateChat(global, update.chatId, {
           unreadCount: chat.unreadCount ? chat.unreadCount + 1 : 1,
-          ...(update.message.hasUnreadMention && {
+          ...(true && {
             unreadMentionsCount: chat.unreadMentionsCount ? chat.unreadMentionsCount + 1 : 1,
           }),
         }));

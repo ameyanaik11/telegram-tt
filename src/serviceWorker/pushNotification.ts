@@ -267,7 +267,7 @@ function ignoreNotification(notifcation: NotificationData): boolean {
       || body.toLocaleLowerCase().includes('n/a')
       || body.toLocaleLowerCase().includes('not avail')
       || body.toLocaleLowerCase().includes('joined the group')) {
-    if (new Date().valueOf() - lastIgnoredNotificationAt < 60 * 1000) {
+    if (new Date().valueOf() - lastIgnoredNotificationAt < 5 * 60 * 1000) {
       // eslint-disable-next-line no-console
       console.count('[Ameya] NA notification - Suppressed');
       return true;
