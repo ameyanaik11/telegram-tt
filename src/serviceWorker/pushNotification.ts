@@ -36,6 +36,7 @@ type CloseNotificationData = {
   chatId: string;
 };
 
+let lastIgnoredNotificationAt = 0;
 let lastSyncAt = new Date().valueOf();
 const shownNotifications = new Set();
 const clickBuffer: Record<string, NotificationData> = {};
@@ -261,16 +262,26 @@ export function handleClientMessage(e: ExtendableMessageEvent) {
 
 function ignoreNotification(notifcation: NotificationData): boolean {
   const { body } = notifcation;
+
   if (body.toLocaleLowerCase().includes('na')
       || body.toLocaleLowerCase().includes('n/a')
       || body.toLocaleLowerCase().includes('not avail')
       || body.toLocaleLowerCase().includes('joined the group')) {
+    if (new Date().valueOf() - lastIgnoredNotificationAt < 60 * 1000) {
+      // eslint-disable-next-line no-console
+      console.count('[Ameya] NA notification - Suppressed');
+      return true;
+    } else {
+      // eslint-disable-next-line no-console
+      console.count('[Ameya] NA notification - Allowed');
+      lastIgnoredNotificationAt = new Date().valueOf();
+      return false;
+    }
+  } else {
     // eslint-disable-next-line no-console
-    console.count('[Ameya] Skip notification');
-    return true;
+    console.count('[Ameya] Non NA notification - Allowed');
+    return false;
   }
-
-  return false;
 }
 
 self.onsync = () => {
