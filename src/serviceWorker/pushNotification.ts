@@ -266,20 +266,22 @@ function ignoreNotification(notifcation: NotificationData): boolean {
   if (body.toLocaleLowerCase().includes('na')
       || body.toLocaleLowerCase().includes('n/a')
       || body.toLocaleLowerCase().includes('not avail')
-      || body.toLocaleLowerCase().includes('joined the group')) {
+      || body.toLocaleLowerCase().includes('joined the group')
+      || body.toLocaleLowerCase().includes('error')
+      || body.toLocaleLowerCase().includes('@AwesomeAdmin_US')) {
     if (new Date().valueOf() - lastIgnoredNotificationAt < 5 * 60 * 1000) {
       // eslint-disable-next-line no-console
-      console.count('[Ameya] NA notification - Suppressed');
+      console.count('[Ameya] Filtered notification - Suppressed');
       return true;
     } else {
       // eslint-disable-next-line no-console
-      console.count('[Ameya] NA notification - Allowed');
+      console.count('[Ameya] Filtered notification - Allowed');
       lastIgnoredNotificationAt = new Date().valueOf();
       return false;
     }
   } else {
     // eslint-disable-next-line no-console
-    console.count('[Ameya] Non NA notification - Allowed');
+    console.count('[Ameya] Non-filtered notification - Allowed');
     return false;
   }
 }

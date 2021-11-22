@@ -2,4 +2,5 @@
 
 🤩 **Better**
 · Ameya - Suppress notifications for 'NA' or 'Not available' keywords
-· Ameya - Allow 'NA' notifications once every 5 mins
+· Ameya - Suppress notifications for 'error' or '@AwesomeAdmin_US' keywords
+· Ameya - Allow filtered notifications once every 5 mins
