@@ -37,6 +37,11 @@ type CloseNotificationData = {
 };
 
 let lastIgnoredNotificationAt = 0;
+const notificationCount = {
+  allowed: 0,
+  filtered: 0,
+  filterAllowed: 0,
+};
 let lastSyncAt = new Date().valueOf();
 const shownNotifications = new Set();
 const clickBuffer: Record<string, NotificationData> = {};
@@ -270,18 +275,21 @@ function ignoreNotification(notifcation: NotificationData): boolean {
       || body.toLocaleLowerCase().includes('error')
       || body.toLocaleLowerCase().includes('@AwesomeAdmin_US')) {
     if (new Date().valueOf() - lastIgnoredNotificationAt < 5 * 60 * 1000) {
+      notificationCount.filtered += 1;
       // eslint-disable-next-line no-console
-      console.count('[Ameya] Filtered notification - Suppressed');
+      console.log(`[Ameya] Notification count ${JSON.stringify(notificationCount)}`);
       return true;
     } else {
+      notificationCount.filterAllowed += 1;
       // eslint-disable-next-line no-console
-      console.count('[Ameya] Filtered notification - Allowed');
+      console.log(`[Ameya] Notification count ${JSON.stringify(notificationCount)}`);
       lastIgnoredNotificationAt = new Date().valueOf();
       return false;
     }
   } else {
+    notificationCount.allowed += 1;
     // eslint-disable-next-line no-console
-    console.count('[Ameya] Non-filtered notification - Allowed');
+    console.log(`[Ameya] Notification count ${JSON.stringify(notificationCount)}`);
     return false;
   }
 }
